@@ -2,6 +2,7 @@ package com.example.luong.myapplication;
 
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,16 +29,17 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import eu.chainfire.libsuperuser.Shell;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
-    RecyclerView recyclerView;
-    Adapter adapter;
-    List<String> list;
+
 
 
     @Override
@@ -120,17 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         /////////////////
-        recyclerView = (RecyclerView) findViewById(R.id.rycycleView);
 
-        adapter = new Adapter(this);
-
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setHasFixedSize(true);
-
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        list = new ArrayList<>();
         //list.add("Dat");
         //adapter.setList(list);
         //recyclerView.setAdapter(adapter);
@@ -138,8 +130,145 @@ public class MainActivity extends AppCompatActivity {
    //     textView = (TextView) findViewById(R.id.tv_name);
 
      //   Log.e("TextView Content", textView.getText() + "");
+        List<String> list = new List<String>() {
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean contains(Object o) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<String> iterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(@NonNull T[] a) {
+                return null;
+            }
+
+            @Override
+            public boolean add(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean remove(Object o) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(@NonNull Collection<? extends String> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(int index, @NonNull Collection<? extends String> c) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public String get(int index) {
+                return null;
+            }
+
+            @Override
+            public String set(int index, String element) {
+                return null;
+            }
+
+            @Override
+            public void add(int index, String element) {
+
+            }
+
+            @Override
+            public String remove(int index) {
+                return null;
+            }
+
+            @Override
+            public int indexOf(Object o) {
+                return 0;
+            }
+
+            @Override
+            public int lastIndexOf(Object o) {
+                return 0;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<String> listIterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<String> listIterator(int index) {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public List<String> subList(int fromIndex, int toIndex) {
+                return null;
+            }
+        };
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rycycleView);
+
+        Adapter adapter = new Adapter(this);
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+
+        adapter.setList(list);
+        recyclerView.setAdapter(adapter);
+
         String cmd_url = "http://192.168.0.103:9200/test01/_search";
-        new FetchData().execute(cmd_url);
+        new FetchData(this, adapter, recyclerView).execute(cmd_url);
     }
 
     @Override
@@ -160,52 +289,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class FetchData extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                Log.e("Dang xu ly", "WTF");
-                HttpURLConnection urlConnection = null;
-                StringBuffer stringBuffer = null;
-                URL url = new URL(strings[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line ="";
-                stringBuffer = new StringBuffer();
-                while ((line = reader.readLine()) != null){
-                    stringBuffer.append(line);
-                }
-                return stringBuffer.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
 
-        @Override
-        protected void onPostExecute(String s) {
-            Log.e("Json Result", s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                JSONArray jsonArray = jsonObject.getJSONObject("hits").getJSONArray("hits");
-                Log.e("ArrLen", Integer.toString(jsonArray.length()));
-                for(int i = 0; i < jsonArray.length(); i++) {
-                    Log.e("ii:", Integer.toString(i));
-                    Log.e("JSon Resultmm", jsonArray.getJSONObject(i).getJSONObject("_source").getString("resp_ht"));
-                    list.add(jsonArray.getJSONObject(i).getJSONObject("_source").getString("resp_ht").toString());
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            // Set list && Adapter
-            adapter.setList(list);
-            recyclerView.setAdapter(adapter);
-            super.onPostExecute(s);
-        }
-    }
 
 
     public void  startCapture(View v) {

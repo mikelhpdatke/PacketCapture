@@ -1,7 +1,6 @@
 package com.example.luong.myapplication;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 
 import android.util.Log;
 import android.widget.TextView;
@@ -12,7 +11,7 @@ import java.util.List;
 import eu.chainfire.libsuperuser.Shell;
 
 /**
- * @Author: devilrx
+ * @Author: Tom
  */
 public class TcpdumpPacketCapture {
 
@@ -136,7 +135,6 @@ public class TcpdumpPacketCapture {
         }
         //progressBox.dismiss();
         return retVal;
-
     }
 
     private static void appendOutput(String line) {
