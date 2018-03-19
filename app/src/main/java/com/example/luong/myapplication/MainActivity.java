@@ -39,9 +39,131 @@ import eu.chainfire.libsuperuser.Shell;
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
+    Adapter adapter = new Adapter(this);
+    List<String> list = new List<String>() {
+        @Override
+        public int size() {
+            return 0;
+        }
 
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
 
+        @Override
+        public boolean contains(Object o) {
+            return false;
+        }
 
+        @NonNull
+        @Override
+        public Iterator<String> iterator() {
+            return null;
+        }
+
+        @NonNull
+        @Override
+        public Object[] toArray() {
+            return new Object[0];
+        }
+
+        @NonNull
+        @Override
+        public <T> T[] toArray(@NonNull T[] a) {
+            return null;
+        }
+
+        @Override
+        public boolean add(String s) {
+            return false;
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            return false;
+        }
+
+        @Override
+        public boolean containsAll(@NonNull Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(@NonNull Collection<? extends String> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(int index, @NonNull Collection<? extends String> c) {
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(@NonNull Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(@NonNull Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public void clear() {
+
+        }
+
+        @Override
+        public String get(int index) {
+            return null;
+        }
+
+        @Override
+        public String set(int index, String element) {
+            return null;
+        }
+
+        @Override
+        public void add(int index, String element) {
+
+        }
+
+        @Override
+        public String remove(int index) {
+            return null;
+        }
+
+        @Override
+        public int indexOf(Object o) {
+            return 0;
+        }
+
+        @Override
+        public int lastIndexOf(Object o) {
+            return 0;
+        }
+
+        @NonNull
+        @Override
+        public ListIterator<String> listIterator() {
+            return null;
+        }
+
+        @NonNull
+        @Override
+        public ListIterator<String> listIterator(int index) {
+            return null;
+        }
+
+        @NonNull
+        @Override
+        public List<String> subList(int fromIndex, int toIndex) {
+            return null;
+        }
+    };
+    RecyclerView recyclerView;
+    LinearLayoutManager linearLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,135 +252,14 @@ public class MainActivity extends AppCompatActivity {
    //     textView = (TextView) findViewById(R.id.tv_name);
 
      //   Log.e("TextView Content", textView.getText() + "");
-        List<String> list = new List<String>() {
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<String> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] a) {
-                return null;
-            }
-
-            @Override
-            public boolean add(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends String> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(int index, @NonNull Collection<? extends String> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public String get(int index) {
-                return null;
-            }
-
-            @Override
-            public String set(int index, String element) {
-                return null;
-            }
-
-            @Override
-            public void add(int index, String element) {
-
-            }
-
-            @Override
-            public String remove(int index) {
-                return null;
-            }
-
-            @Override
-            public int indexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public int lastIndexOf(Object o) {
-                return 0;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<String> listIterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<String> listIterator(int index) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<String> subList(int fromIndex, int toIndex) {
-                return null;
-            }
-        };
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rycycleView);
-
-        Adapter adapter = new Adapter(this);
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView = (RecyclerView) findViewById(R.id.rycycleView);
+
+
+
+
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -267,8 +268,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setList(list);
         recyclerView.setAdapter(adapter);
 
-        String cmd_url = "http://192.168.0.103:9200/test01/_search";
-        new FetchData(this, adapter, recyclerView).execute(cmd_url);
+
     }
 
     @Override
@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -293,6 +294,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void  startCapture(View v) {
+        //
+
+        String ip_server = "";
+        TextView textView = (TextView) findViewById(R.id.tv_ipsv);
+        ip_server = textView.getText().toString();
+        String cmd_url = new StringBuffer().append("http://").append(ip_server).append(":9200").append("/test01/_search").toString();
+        //"http://192.168.0.103:9200/test01/_search";
+
+        new FetchData(this, adapter, recyclerView).execute(cmd_url);
+        //
         Button bt = (Button)findViewById(R.id.button_start);
         bt.setEnabled(false);
         if((int)bt.getTag() == 1){

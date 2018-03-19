@@ -44,6 +44,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="TextView" />
-
+    <EditText
+        android:id="@+id/tv_ipsv"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:hint="Your IP Server"
+        android:textSize="18sp"
+        android:layout_toRightOf="@id/button_start"
+        android:layout_toLeftOf="@id/button_stop"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        />
 
 </RelativeLayout>
