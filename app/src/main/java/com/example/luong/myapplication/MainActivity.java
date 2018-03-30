@@ -1,5 +1,7 @@
 package com.example.luong.myapplication;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -12,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -37,6 +41,11 @@ import java.util.ListIterator;
 import eu.chainfire.libsuperuser.Shell;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     TextView textView;
     Adapter adapter = new Adapter(this);
@@ -242,18 +251,6 @@ public class MainActivity extends AppCompatActivity {
         new Thread(runnable).start();
 
 
-
-        /////////////////
-
-        //list.add("Dat");
-        //adapter.setList(list);
-        //recyclerView.setAdapter(adapter);
-
-   //     textView = (TextView) findViewById(R.id.tv_name);
-
-     //   Log.e("TextView Content", textView.getText() + "");
-
-
         recyclerView = (RecyclerView) findViewById(R.id.rycycleView);
 
 
@@ -294,14 +291,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void  startCapture(View v) {
-        //
 
+        //
         String ip_server = "";
-        TextView textView = (TextView) findViewById(R.id.tv_ipsv);
-        ip_server = textView.getText().toString();
+        EditText editText = (EditText) findViewById(R.id.tv_ipsv);
+        ip_server = editText.getText().toString();
+        //
+        //hideKeyboard
+        hideKeyboardFrom(this,editText);
+
+        Log.e("EditText", editText.getText().toString());
         String cmd_url = new StringBuffer().append("http://").append(ip_server).append(":9200").append("/test01/_search").toString();
         //"http://192.168.0.103:9200/test01/_search";
-
+        Log.e("IP Server::", cmd_url);
         new FetchData(this, adapter, recyclerView).execute(cmd_url);
         //
         Button bt = (Button)findViewById(R.id.button_start);

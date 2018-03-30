@@ -54,6 +54,7 @@
         android:layout_toLeftOf="@id/button_stop"
         android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:imeOptions="actionDone"
         />
 
 </RelativeLayout>

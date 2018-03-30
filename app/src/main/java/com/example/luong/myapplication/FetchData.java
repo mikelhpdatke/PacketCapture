@@ -46,9 +46,10 @@ public class FetchData extends AsyncTask<String, String, String> {
         while (true) {
             Log.e("Background::","Fetching data from server..");
             try {
-                Log.e("Dang xu ly", "WTF");
+                Log.e("Dang xu ly", strings[0]);
                 HttpURLConnection urlConnection = null;
                 StringBuffer stringBuffer = null;
+
                 URL url = new URL(strings[0]);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
