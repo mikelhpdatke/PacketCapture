@@ -75,9 +75,12 @@ public class TcpdumpPacketCapture {
 
                 return;
             }
-            rootTcpdumpShell.addCommand(activity.getApplicationInfo().dataDir + "/files/tcpdump.bin -w - | " +
-                            activity.getApplicationInfo().dataDir +
-                    "/files/busybox.bin nc -l -p 2000", 0, new Shell.OnCommandLineListener() {
+            // Command :: tcpdump -i <interface> "tcp[tcpflags] & (tcp-syn) != 0"
+
+            rootTcpdumpShell.addCommand(activity.getApplicationInfo().dataDir
+                    + "/files/tcpdump.bin -i any \"tcp[tcpflags] & (tcp-syn) != 0\" -w - | "
+                    + activity.getApplicationInfo().dataDir
+                    + "/files/busybox.bin nc -l -p 2000", 0, new Shell.OnCommandLineListener() {
                 @Override
                 public void onCommandResult(int commandVal, int exitVal) {
                     if (exitVal < 0) {
@@ -97,7 +100,7 @@ public class TcpdumpPacketCapture {
         ((TextView)activity.findViewById(R.id.tv_status)).setText("Packet capture started..");
     }
 
-    public static int stopTcpdumpCapture(Activity _activity){
+    public static void stopTcpdumpCapture(Activity _activity){
         if(isInitialised == false) {
             //Uncommenting creates problem with sometimes main_tv output wrong. Not really required right now.
             //initialiseCapture(_activity);
@@ -134,7 +137,6 @@ public class TcpdumpPacketCapture {
             throw ex;
         }
         //progressBox.dismiss();
-        return retVal;
     }
 
     private static void appendOutput(String line) {
