@@ -301,8 +301,8 @@ public class MainActivity extends AppCompatActivity {
         hideKeyboardFrom(this,editText);
 
         Log.e("EditText", editText.getText().toString());
-        String cmd_url = new StringBuffer().append("http://").append(ip_server).append(":9200").append("/test01/_search").toString();
-        //"http://192.168.0.103:9200/test01/_search";
+        String cmd_url = new StringBuffer().append("http://").append(ip_server).append(":9200").append("/android/_search").toString();
+
         Log.e("IP Server::", cmd_url);
         new FetchData(this, adapter, recyclerView).execute(cmd_url);
         //
