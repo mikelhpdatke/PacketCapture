@@ -2,6 +2,7 @@ package com.example.luong.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -37,6 +38,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -281,7 +283,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.setting: {
                 Log.e("OnclickSetting", "Hello World Setting");
-                break;
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
             }
         }
         return super.onOptionsItemSelected(item);
@@ -293,15 +296,15 @@ public class MainActivity extends AppCompatActivity {
     public void  startCapture(View v) {
 
         //
-        String ip_server = "";
-        EditText editText = (EditText) findViewById(R.id.tv_ipsv);
-        ip_server = editText.getText().toString();
+        //String ip_server = "";
+        //EditText editText = (EditText) findViewById(R.id.tv_ipsv);
+        //ip_server = editText.getText().toString();
         //
         //hideKeyboard
-        hideKeyboardFrom(this,editText);
+        //hideKeyboardFrom(this,editText);
 
-        Log.e("EditText", editText.getText().toString());
-        String cmd_url = new StringBuffer().append("http://").append(ip_server).append(":9200").append("/android/_search").toString();
+        Log.e("EditText", SettingActivity.ip_server);
+        String cmd_url = new StringBuffer().append("http://").append(SettingActivity.ip_server).append(":9200").append("/android/_search").toString();
 
         Log.e("IP Server::", cmd_url);
         new FetchData(this, adapter, recyclerView).execute(cmd_url);
@@ -319,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else if ((int)bt.getTag() == 0){
-            TcpdumpPacketCapture.initialiseCapture(this);
+            TcpdumpPacketCapture.initialiseCapture(this, SettingActivity.ip_server);
             bt.setText("Stop  Capture");
             bt.setTag(1);
         }

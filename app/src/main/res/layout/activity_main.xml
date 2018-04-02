@@ -17,14 +17,15 @@
 
 
     </android.support.v7.widget.RecyclerView>
+
     <Button
         android:id="@+id/button_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Start Capture"
         android:onClick="startCapture"
-        />
+        android:shadowColor="@android:color/holo_blue_dark"
+        android:text="Start" />
 
     <Button
         android:id="@+id/button_stop"
@@ -33,8 +34,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="Quit"
-        android:onClick="stopAndExitActivity"/>
+        android:onClick="stopAndExitActivity"
+        android:text="Quit" />
 
     <TextView
         android:id="@+id/tv_status"
@@ -44,17 +45,5 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="TextView" />
-    <EditText
-        android:id="@+id/tv_ipsv"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:hint="Your IP Server"
-        android:textSize="18sp"
-        android:layout_toRightOf="@id/button_start"
-        android:layout_toLeftOf="@id/button_stop"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:imeOptions="actionDone"
-        />
 
 </RelativeLayout>

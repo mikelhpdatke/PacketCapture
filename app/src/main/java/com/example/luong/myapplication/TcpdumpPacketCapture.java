@@ -19,10 +19,10 @@ public class TcpdumpPacketCapture {
     private static Shell.Interactive rootTcpdumpShell;
 
     private static boolean isInitialised = false;
-
-    public static void initialiseCapture(Activity _activity) {
+    static String ip_server;
+    public static void initialiseCapture(Activity _activity, String _ip_server) {
         activity = _activity;
-
+        ip_server = _ip_server;
         Log.e("Debug_Tom","Initialising Capture");
         Log.e("Debug_Tom","Please wait while packet capture is initialised...");
 
@@ -80,7 +80,7 @@ public class TcpdumpPacketCapture {
             rootTcpdumpShell.addCommand(activity.getApplicationInfo().dataDir
                     + "/files/tcpdump.bin -i any \"tcp[tcpflags] & (tcp-syn) != 0\" -w - | "
                     + activity.getApplicationInfo().dataDir
-                    + "/files/busybox.bin nc -l -p 2000", 0, new Shell.OnCommandLineListener() {
+                    + "/files/busybox.bin nc " + ip_server + " 2000", 0, new Shell.OnCommandLineListener() {
                 @Override
                 public void onCommandResult(int commandVal, int exitVal) {
                     if (exitVal < 0) {
