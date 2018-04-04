@@ -44,6 +44,8 @@
         android:layout_above="@+id/button_start"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="TextView" />
+        android:text="TextView"
+        android:gravity="center"
+        />
 
 </RelativeLayout>
