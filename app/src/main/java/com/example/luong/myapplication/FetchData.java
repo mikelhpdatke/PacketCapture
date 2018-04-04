@@ -46,7 +46,7 @@ public class FetchData extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        Toast.makeText(contextParent, "Starting fetch json data..", Toast.LENGTH_LONG).show();
+        //Toast.makeText(contextParent, "Starting fetch json data..", Toast.LENGTH_LONG).show();
     }
 
     protected String doInBackground(String... strings) {
