@@ -5,4 +5,8 @@
         android:title="Setting"
         app:showAsAction="collapseActionView"
         />
+    <item android:id="@+id/log_setting"
+        android:title="Logs"
+        app:showAsAction="collapseActionView"
+        />
 </menu>

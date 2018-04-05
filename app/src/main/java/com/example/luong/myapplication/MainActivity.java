@@ -1,6 +1,8 @@
 package com.example.luong.myapplication;
 
 import android.app.Activity;
+import java.util.Calendar;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -280,12 +282,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.setting: {
+
+        if (item.getItemId() == R.id.setting){
+
                 Log.e("OnclickSetting", "Hello World Setting");
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
-            }
+        }
+        else
+            if (item.getItemId() == R.id.log_setting){
+                Log.e("OnclickSetting", "Hello World Log");
+                Intent intent = new Intent(MainActivity.this, LogActivity.class);
+                startActivity(intent);
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -302,8 +311,9 @@ public class MainActivity extends AppCompatActivity {
         //
         //hideKeyboard
         //hideKeyboardFrom(this,editText);
+        //LogActivity.addString("StarttttttWTF");
 
-        Log.e("EditText", SettingActivity.ip_server);
+        Log.e("EditText", Calendar.getInstance().getTime().toString() + ":" + SettingActivity.ip_server);
         String cmd_url = new StringBuffer().append("http://").append(SettingActivity.ip_server).append(":9200").append("/android/_search").toString();
 
         Log.e("IP Server::", cmd_url);
@@ -314,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
         if((int)bt.getTag() == 1){
             //Using progress dialogue from main. See comment in: TcpdumpPacketCapture.stopTcpdumpCapture
             Log.e("Debug_Tom","Killing Tcpdump && Busybox process.");
+            LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Killing Tcpdump && Busybox process.");
             TcpdumpPacketCapture.stopTcpdumpCapture(this);
 
             bt.setText("Start Capture");

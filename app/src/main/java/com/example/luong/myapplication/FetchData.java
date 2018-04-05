@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -46,7 +49,7 @@ public class FetchData extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //Toast.makeText(contextParent, "Starting fetch json data..", Toast.LENGTH_LONG).show();
+        LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Running FetchData classs..");
     }
 
     protected String doInBackground(String... strings) {
@@ -57,6 +60,7 @@ public class FetchData extends AsyncTask<String, String, String> {
                 e.printStackTrace();
             }
             Log.e("Background::","Fetching data from server..");
+            LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Fetching data from server..");
             try {
                 Log.e("Dang xu ly", strings[0]);
                 HttpURLConnection urlConnection = null;
@@ -84,6 +88,7 @@ public class FetchData extends AsyncTask<String, String, String> {
             }
         }
     }
+
 
     @Override
     protected void onProgressUpdate(String... values) {
@@ -116,11 +121,14 @@ public class FetchData extends AsyncTask<String, String, String> {
 
                 // Build notification
                 // Actions are just fake
-                Notification noti = new Notification.Builder(contextParent)
-                        .setContentTitle("Thiết bị của bạn đang truy cập IP lạ!!")
-                        .setContentText("Bấm để xem chi tiết").setSmallIcon(R.drawable.virus)
-                        .setContentIntent(pIntent)
-                        .build();
+                Notification noti = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    noti = new Notification.Builder(contextParent)
+                            .setContentTitle("Thiết bị của bạn đang truy cập IP lạ!!")
+                            .setContentText("Bấm để xem chi tiết").setSmallIcon(R.drawable.virus)
+                            .setContentIntent(pIntent)
+                            .build();
+                }
 
                 noti.defaults |= Notification.DEFAULT_SOUND;
 
